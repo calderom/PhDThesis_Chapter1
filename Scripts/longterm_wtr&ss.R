@@ -18,7 +18,7 @@ library(metR)
 metadata <- read.csv("Data/longterm_metadata.csv", stringsAsFactors = T)
 metadata$Date <- as.Date(metadata$Date,"%d/%m/%Y")
 names(metadata)
-str(metadata)
+
 
 #FIGURE 12 - THESIS CHAPTER 1
 
