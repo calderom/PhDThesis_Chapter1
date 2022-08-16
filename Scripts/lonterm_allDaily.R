@@ -69,6 +69,10 @@ Q <- read.csv("Data/secchi_depth_2004_2020.csv", header = TRUE, sep = ",", strin
 Q$Date <- as.Date(Q$Date,"%d/%m/%Y")
 str(Q)
 
+fishcounts <- read.csv("Data/newport_daily_fish_counts_2004_2020.csv", header = TRUE, sep = ";", stringsAsFactors = T)
+fishcounts$Date <- as.Date(fishcounts$Date,"%d/%m/%Y")
+str(fishcounts)
+
 #join DATASETS by DATE = metadatafile
 join1 <- full_join(A, B, by = "Date")
 join2 <- full_join(join1, C, by = "Date")
@@ -84,65 +88,65 @@ join11 <- full_join(join10, M, by = "Date")
 join12 <- full_join(join11, N, by = "Date")
 join13 <- full_join(join12, O, by = "Date")
 join14 <- full_join(join13, P, by = "Date") 
-join15 <- full_join(join14, Q, by = "Date") 
+join15 <- full_join(join14, Q, by = "Date")
+join16 <- full_join(join15, fishcounts, by = "Date")
 
-#ALL = 6210 obs + 111 variables
-names(join15)
+#ALL = 6210 obs 
+names(join16)
 
 #Calculate new variables
 #Colour loadings:
 #river Q m3/s * 1000 L/m3 * 86400 s/day * mgPt/L / 1000000 = KgPt/day
-join15$BR.COLload <- join15$BR_Q*1000*86400*join15$BR.Colour/1000000
-join15$GR.COLload <- join15$GR_Q*1000*86400*join15$GR.Colour/1000000
+join16$BR.COLload <- join16$BR_Q*1000*86400*join16$BR.Colour/1000000
+join16$GR.COLload <- join16$GR_Q*1000*86400*join16$GR.Colour/1000000
 #TN loadings:
 #river Q m3/s * 1000 L/m3 * 86400 s/day * mgN/L / 1000000 = KgN/day
-join15$BR.TNload <- join15$BR_Q*1000*86400*join15$BR.TN/1000000
-join15$GR.TNload <- join15$GR_Q*1000*86400*join15$GR.TN/1000000
+join16$BR.TNload <- join16$BR_Q*1000*86400*join16$BR.TN/1000000
+join16$GR.TNload <- join16$GR_Q*1000*86400*join16$GR.TN/1000000
 #TP loadings:
 #river Q m3/s * 1000 L/m3 * 86400 s/day * ugP/L / 1000000000 = KgN/day
-join15$BR.TPload <- join15$BR_Q*1000*86400*join15$BR.TP/1000000000
-join15$GR.TPload <- join15$GR_Q*1000*86400*join15$GR.TP/1000000000
+join16$BR.TPload <- join16$BR_Q*1000*86400*join16$BR.TP/1000000000
+join16$GR.TPload <- join16$GR_Q*1000*86400*join16$GR.TP/1000000000
 #Convert Kg/day of nutrients to mol/day to carry out molar ratios
 #N = 14g/mol
-join15$BR.TNloadmolar <- join15$BR.TNload/0.014
-join15$GR.TNloadmolar <- join15$GR.TNload/0.014
+join16$BR.TNloadmolar <- join16$BR.TNload/0.014
+join16$GR.TNloadmolar <- join16$GR.TNload/0.014
 #P = 31g/mol
-join15$BR.TPloadmolar <- join15$BR.TPload/0.031
-join15$GR.TPloadmolar <- join15$GR.TPload/0.031
+join16$BR.TPloadmolar <- join16$BR.TPload/0.031
+join16$GR.TPloadmolar <- join16$GR.TPload/0.031
 #sum molar total nutrients inflow
-join15$COLload <- join15$BR.COLload+join15$GR.COLload #kg/day
-join15$TNload <- join15$BR.TNload+join15$GR.TNload #kg/day
-join15$TPload <- join15$BR.TPload+join15$GR.TPload #kg/day
-join15$TNloadmolar <- join15$BR.TNloadmolar+join15$GR.TNloadmolar #mol/day
-join15$TPloadmolar <- join15$BR.TPloadmolar+join15$GR.TPloadmolar #mol/day
-join15$TN.TPload <- log(join15$TNloadmolar/join15$TPloadmolar) #log() = default ln()
+join16$COLload <- join16$BR.COLload+join16$GR.COLload #kg/day
+join16$TNload <- join16$BR.TNload+join16$GR.TNload #kg/day
+join16$TPload <- join16$BR.TPload+join16$GR.TPload #kg/day
+join16$TNloadmolar <- join16$BR.TNloadmolar+join16$GR.TNloadmolar #mol/day
+join16$TPloadmolar <- join16$BR.TPloadmolar+join16$GR.TPloadmolar #mol/day
+join16$TN.TPload <- log(join16$TNloadmolar/join16$TPloadmolar) #log() = default ln()
 #Feeagh TN:TP
-join15$F.TNmolar <- join15$F.TN*1000/14 #umol/l
-join15$F.TPmolar <- join15$F.TP/31 #umol/l
-join15$F_TN.TP <- log(join15$F.TNmolar/join15$F.TPmolar) #log() = default ln()
+join16$F.TNmolar <- join16$F.TN*1000/14 #umol/l
+join16$F.TPmolar <- join16$F.TP/31 #umol/l
+join16$F_TN.TP <- log(join16$F.TNmolar/join16$F.TPmolar) #log() = default ln()
 #Zoo:chla
-join15$Zoo.Chla <- log(join15$Zoo_TB+1/(join15$Chl.a+1)*66) #log() = default ln()
+join16$Zoo.Chla <- log(join16$Zoo_TB+1/(join16$Chl.a+1)*66) #log() = default ln()
 #copepodsB:cladoceransB
-join15$copB.claB <- log((join15$Cala_TB+join15$Cyc_TB+join15$Nau_TB)/(join15$Dap_TB+join15$Diaph_TB+join15$Cerio_TB+join15$Bosm_TB))
+join16$copB.claB <- log((join16$Cala_TB+join16$Cyc_TB+join16$Nau_TB)/(join16$Dap_TB+join16$Diaph_TB+join16$Cerio_TB+join16$Bosm_TB))
 #copepodsA:cladoceransA
-join15$copA.claA <- log((join15$Cala_TA+join15$Cyc_TA+join15$Nau_TA)/(join15$Dap_TA+join15$Diaph_TA+join15$Cerio_TA+join15$Bosm_TA))
+join16$copA.claA <- log((join16$Cala_TA+join16$Cyc_TA+join16$Nau_TA)/(join16$Dap_TA+join16$Diaph_TA+join16$Cerio_TA+join16$Bosm_TA))
 
 #add year, month and DOY column from Date
-join15[, "Year"] <- format(join15[,"Date"], "%Y")
-join15[, "Month"] <- format(join15[,"Date"], "%b")
+join16[, "Year"] <- format(join16[,"Date"], "%Y")
+join16[, "Month"] <- format(join16[,"Date"], "%b")
 #join14[, "DOY"] <- (format(join14[,"Date"], "%d"))
-join15[, "DOY"] <- as.numeric(yday(join15$Date))
+join16[, "DOY"] <- as.numeric(yday(join16$Date))
 
-names(join15) #now 136 variables
-metadata.summary <- summary(join15)
+names(join16) #now 137 variables
+metadata.summary <- summary(join16)
 
-metadata.summary <- summary(metadata)
 
 #save and export values to excel file
 write.table(metadata.summary, file="Data/metadataSummary.csv",sep=",",row.names=F)
-write.table(join15, file="Data/longterm_metadata.csv", sep=",",row.names=F)
+write.table(join16, file="Data/longterm_metadata.csv", sep=",",row.names=F)
 
-write.table(metadata.summary, file="Data/metadataSummary.csv",sep=",",row.names=F)
+
 
 
 

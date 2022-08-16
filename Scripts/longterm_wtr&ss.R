@@ -89,11 +89,11 @@ p3 <- ggplot(ss, aes(Date, ss)) +
   theme(text = element_text(size = 10), panel.background = element_rect(fill = 'white', colour = 'black'),
         axis.title.x = element_blank())+
   #blue (-change < -100 = towards fast mixing)
-  geom_vline(xintercept=as.numeric(as.Date("2018-06-30")), linetype=4, size=1, colour="blue")+
-  geom_vline(xintercept=as.numeric(as.Date("2018-06-13")), linetype=4, size=1, colour="blue")+
-  geom_vline(xintercept=as.numeric(as.Date("2011-07-16")), linetype=4, size=1, colour="blue")+
-  geom_vline(xintercept=as.numeric(as.Date("2012-06-07")), linetype=4, size=1, colour="blue")+
-  geom_vline(xintercept=as.numeric(as.Date("2013-08-02")), linetype=4, size=1, colour="blue")+
+  geom_vline(xintercept=as.numeric(as.Date("2018-06-30")), linetype=4, size=0.8, colour="blue")+
+  geom_vline(xintercept=as.numeric(as.Date("2018-06-13")), linetype=4, size=0.8, colour="blue")+
+  geom_vline(xintercept=as.numeric(as.Date("2011-07-16")), linetype=4, size=0.8, colour="blue")+
+  geom_vline(xintercept=as.numeric(as.Date("2012-06-07")), linetype=4, size=0.8, colour="blue")+
+  geom_vline(xintercept=as.numeric(as.Date("2013-08-02")), linetype=4, size=0.8, colour="blue")+
   #geom_vline(xintercept=as.numeric(as.Date("2007-08-11")), linetype=4, size=1, colour="blue")+
   #geom_vline(xintercept=as.numeric(as.Date("2016-06-14")), linetype=4, size=1, colour="blue")+
   #red(+change > 100 = towards fast stratification)
@@ -101,34 +101,34 @@ p3 <- ggplot(ss, aes(Date, ss)) +
   #geom_vline(xintercept=as.numeric(as.Date("2007-08-10")), linetype=1, size=1, colour="red")+
   #geom_vline(xintercept=as.numeric(as.Date("2018-06-29")), linetype=1, size=1, colour="red")+
   #geom_vline(xintercept=as.numeric(as.Date("2013-07-19")), linetype=1, size=1, colour="red")+
-  #red rectangle when > 4 consecutive days with ss > 400
+  #red rectangle when > 4 consecutive days with ss > 500
   annotate("rect",
            xmin = as.Date("2006-07-19"), xmax = as.Date("2006-07-23"), 
-           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) +
+           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) +
   annotate("rect",
            xmin = as.Date("2010-06-25"), xmax = as.Date("2010-06-28"), 
-           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) +
+           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) +
   annotate("rect",
            xmin = as.Date("2013-07-13"), xmax = as.Date("2013-08-02"), 
-           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) +
+           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) +
   annotate("rect",
            xmin = as.Date("2014-07-22"), xmax = as.Date("2014-08-02"), 
-           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) +
+           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) +
   annotate("rect",
            xmin = as.Date("2014-08-06"), xmax = as.Date("2014-08-10"), 
-           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) +
+           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) +
   annotate("rect",
            xmin = as.Date("2016-06-06"), xmax = as.Date("2016-06-14"), 
-           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) +
+           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) +
   annotate("rect",
            xmin = as.Date("2018-07-04"), xmax = as.Date("2018-07-28"), 
-           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) +
+           ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) +
 annotate("rect",
          xmin = as.Date("2020-06-01"), xmax = as.Date("2020-06-04"), 
-         ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) +
+         ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) +
 annotate("rect",
          xmin = as.Date("2020-08-10"), xmax = as.Date("2020-08-25"), 
-         ymin = -Inf, ymax = Inf,  fill = "red", alpha=.5) 
+         ymin = -Inf, ymax = Inf,  fill = "red", alpha=.8) 
 #geom_hline(yintercept=400, linetype=2, size=0.5, colour="black")
 p3
 
@@ -142,7 +142,8 @@ title <- ggdraw() +
              hjust = 0
   ) +
   theme(plot.margin = margin(0, 0, 0, 7))
-plot_grid(title, p4, ncol=1, rel_heights = c(0.1, 1))
+Figure12 <- plot_grid(title, p4, ncol=1, rel_heights = c(0.1, 1))
+Figure12
 
 #save figure as image 
 ggsave("Figures/Figure12.jpeg", width = 18, height = 20, units = "cm")

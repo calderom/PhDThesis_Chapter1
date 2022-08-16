@@ -20,7 +20,8 @@ library(MARSS) #DFA trials
 
 #input file
 metadata <- read.csv("Data/longterm_metadata.csv", stringsAsFactors = T)
-metadata$Date <- as.Date(metadata$Date,"%d/%m/%Y")
+metadata$Date <- as.Date(metadata$Date,"%Y-%m-%d") #careful here with format of Date!
+str(metadata)
 names(metadata)
 
 #RIVER DISCHARGES
@@ -594,7 +595,7 @@ FigureS5 <- plot_grid(title, phytoPLOT, ncol=1, rel_heights = c(0.1, 1))
 ggsave(path = "Figures", filename ="FigureS5.jpeg", width = 32, height = 20, units = "cm")
 
 
-#1.3.4 Shifts in zooplankton community structure
+#Shifts in zooplankton community structure
 #ZOOPLANKTON TAXA COLOURS
 #"Dap" = "blue", 
 #"Diaph" = "turquoise1",
@@ -604,11 +605,580 @@ ggsave(path = "Figures", filename ="FigureS5.jpeg", width = 32, height = 20, uni
 #"Cyc"="yellow4",
 #"Cala"="green3"
 
-#barplots for each year of relative biomass
-#pivot dataset for taxa specific total biomass
-zoo_TB <- daily_plankton %>% 
+#pivot dataset for taxa specific total ABUNDANCE...........................................................
+zoo_TA <- metadata %>% 
+  select(Date, Year, Dap_TA, Diaph_TA, Cala_TA, Nau_TA, Cyc_TA, Cerio_TA, Bosm_TA)
+str(zoo_TA)
+
+#create a dataframe for each year and pivot to plot
+#2004
+zoo_TA_2004 <-zoo_TA[zoo_TA$Year %in% "2004",]
+zoo_TA_2004 <- zoo_TA_2004 %>% 
+  select(-Year)
+pivot_zoo_TA_2004 <- zoo_TA_2004 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2004$value <- as.numeric(pivot_zoo_TA_2004$value)
+pivot_zoo_TA_2004$variable <- ordered(pivot_zoo_TA_2004$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2005
+zoo_TA_2005 <-zoo_TA[zoo_TA$Year %in% "2005",]
+zoo_TA_2005 <- zoo_TA_2005 %>% 
+  select(-Year)
+pivot_zoo_TA_2005 <- zoo_TA_2005 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2005$value <- as.numeric(pivot_zoo_TA_2005$value)
+pivot_zoo_TA_2005$variable <- ordered(pivot_zoo_TA_2005$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+
+#2006
+zoo_TA_2006 <-zoo_TA[zoo_TA$Year %in% "2006",]
+zoo_TA_2006 <- zoo_TA_2006 %>% 
+  select(-Year)
+pivot_zoo_TA_2006 <- zoo_TA_2006 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2006$value <- as.numeric(pivot_zoo_TA_2006$value)
+pivot_zoo_TA_2006$variable <- ordered(pivot_zoo_TA_2006$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2007
+zoo_TA_2007 <-zoo_TA[zoo_TA$Year %in% "2007",]
+zoo_TA_2007 <- zoo_TA_2007 %>% 
+  select(-Year)
+pivot_zoo_TA_2007 <- zoo_TA_2007 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2007$value <- as.numeric(pivot_zoo_TA_2007$value)
+pivot_zoo_TA_2007$variable <- ordered(pivot_zoo_TA_2007$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+
+#2008
+zoo_TA_2008 <-zoo_TA[zoo_TA$Year %in% "2008",]
+zoo_TA_2008 <- zoo_TA_2008 %>% 
+  select(-Year)
+pivot_zoo_TA_2008 <- zoo_TA_2008 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2008$value <- as.numeric(pivot_zoo_TA_2008$value)
+pivot_zoo_TA_2008$variable <- ordered(pivot_zoo_TA_2008$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2009
+zoo_TA_2009 <-zoo_TA[zoo_TA$Year %in% "2009",]
+zoo_TA_2009 <- zoo_TA_2009 %>% 
+  select(-Year)
+pivot_zoo_TA_2009 <- zoo_TA_2009 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2009$value <- as.numeric(pivot_zoo_TA_2009$value)
+pivot_zoo_TA_2009$variable <- ordered(pivot_zoo_TA_2009$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+
+#2010
+zoo_TA_2010 <-zoo_TA[zoo_TA$Year %in% "2010",]
+zoo_TA_2010 <- zoo_TA_2010 %>% 
+  select(-Year)
+pivot_zoo_TA_2010 <- zoo_TA_2010 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2010$value <- as.numeric(pivot_zoo_TA_2010$value)
+pivot_zoo_TA_2010$variable <- ordered(pivot_zoo_TA_2010$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+
+#2011
+zoo_TA_2011 <-zoo_TA[zoo_TA$Year %in% "2011",]
+zoo_TA_2011 <- zoo_TA_2011 %>% 
+  select(-Year)
+pivot_zoo_TA_2011 <- zoo_TA_2011 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2011$value <- as.numeric(pivot_zoo_TA_2011$value)
+pivot_zoo_TA_2011$variable <- ordered(pivot_zoo_TA_2011$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2012
+zoo_TA_2012 <-zoo_TA[zoo_TA$Year %in% "2012",]
+zoo_TA_2012 <- zoo_TA_2012 %>% 
+  select(-Year)
+pivot_zoo_TA_2012 <- zoo_TA_2012 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2012$value <- as.numeric(pivot_zoo_TA_2012$value)
+pivot_zoo_TA_2012$variable <- ordered(pivot_zoo_TA_2012$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2013
+zoo_TA_2013 <-zoo_TA[zoo_TA$Year %in% "2013",]
+zoo_TA_2013 <- zoo_TA_2013 %>% 
+  select(-Year)
+pivot_zoo_TA_2013 <- zoo_TA_2013 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2013$value <- as.numeric(pivot_zoo_TA_2013$value)
+pivot_zoo_TA_2013$variable <- ordered(pivot_zoo_TA_2013$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2014
+zoo_TA_2014 <-zoo_TA[zoo_TA$Year %in% "2014",]
+zoo_TA_2014 <- zoo_TA_2014 %>% 
+  select(-Year)
+pivot_zoo_TA_2014 <- zoo_TA_2014 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2014$value <- as.numeric(pivot_zoo_TA_2014$value)
+pivot_zoo_TA_2014$variable <- ordered(pivot_zoo_TA_2014$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2015
+zoo_TA_2015 <-zoo_TA[zoo_TA$Year %in% "2015",]
+zoo_TA_2015 <- zoo_TA_2015 %>% 
+  select(-Year)
+pivot_zoo_TA_2015 <- zoo_TA_2015 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2015$value <- as.numeric(pivot_zoo_TA_2015$value)
+pivot_zoo_TA_2015$variable <- ordered(pivot_zoo_TA_2015$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2016
+zoo_TA_2016 <-zoo_TA[zoo_TA$Year %in% "2016",]
+zoo_TA_2016 <- zoo_TA_2016 %>% 
+  select(-Year)
+pivot_zoo_TA_2016 <- zoo_TA_2016 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2016$value <- as.numeric(pivot_zoo_TA_2016$value)
+pivot_zoo_TA_2016$variable <- ordered(pivot_zoo_TA_2016$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2017
+zoo_TA_2017 <-zoo_TA[zoo_TA$Year %in% "2017",]
+zoo_TA_2017 <- zoo_TA_2017 %>% 
+  select(-Year)
+pivot_zoo_TA_2017 <- zoo_TA_2017 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2017$value <- as.numeric(pivot_zoo_TA_2017$value)
+pivot_zoo_TA_2017$variable <- ordered(pivot_zoo_TA_2017$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+
+#2018
+zoo_TA_2018 <-zoo_TA[zoo_TA$Year %in% "2018",]
+zoo_TA_2018 <- zoo_TA_2018 %>% 
+  select(-Year)
+pivot_zoo_TA_2018 <- zoo_TA_2018 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2018$value <- as.numeric(pivot_zoo_TA_2018$value)
+pivot_zoo_TA_2018$variable <- ordered(pivot_zoo_TA_2018$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+#2019
+zoo_TA_2019 <-zoo_TA[zoo_TA$Year %in% "2019",]
+zoo_TA_2019 <- zoo_TA_2019 %>% 
+  select(-Year)
+pivot_zoo_TA_2019 <- zoo_TA_2019 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2019$value <- as.numeric(pivot_zoo_TA_2019$value)
+pivot_zoo_TA_2019$variable <- ordered(pivot_zoo_TA_2019$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+
+#2020
+zoo_TA_2020 <-zoo_TA[zoo_TA$Year %in% "2020",]
+zoo_TA_2020 <- zoo_TA_2020 %>% 
+  select(-Year)
+pivot_zoo_TA_2020 <- zoo_TA_2020 %>% 
+  pivot_longer(-Date, 
+               names_to = "variable", 
+               values_to = "value")
+pivot_zoo_TA_2020$value <- as.numeric(pivot_zoo_TA_2020$value)
+pivot_zoo_TA_2020$variable <- ordered(pivot_zoo_TA_2020$variable, 
+                                      levels=c("Dap_TA", "Diaph_TA","Cerio_TA", "Bosm_TA","Nau_TA", "Cyc_TA", "Cala_TA"))
+
+
+
+#plot
+#A = 2004
+A <- 
+  ggplot(pivot_zoo_TA_2004, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2004-01-01","2004-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2004")
+A
+#B = 2005
+B <- 
+  ggplot(pivot_zoo_TA_2005, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2005-01-01","2005-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2005")
+B
+#C = 2006
+C <- 
+  ggplot(pivot_zoo_TA_2006, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2006-01-01","2006-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2006")
+C
+#D = 2007
+D <- 
+  ggplot(pivot_zoo_TA_2007, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2007-01-01","2007-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2007")
+D
+#E = 2008
+E <- 
+  ggplot(pivot_zoo_TA_2008, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2008-01-01","2008-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2008")
+E
+#F = 2009
+Fp <- 
+  ggplot(pivot_zoo_TA_2009, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2009-01-01","2009-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2009")
+Fp
+#G = 2010
+G <- 
+  ggplot(pivot_zoo_TA_2010, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2010-01-01","2010-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2010")
+G
+#H = 2011
+H <- 
+  ggplot(pivot_zoo_TA_2011, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2011-01-01","2011-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2011")
+H
+#I = 2012
+I <- 
+  ggplot(pivot_zoo_TA_2012, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2012-01-01","2012-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2012")
+I
+#J = 2013
+J <- 
+  ggplot(pivot_zoo_TA_2013, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2013-01-01","2013-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2013")
+J
+#K = 2014
+K <- 
+  ggplot(pivot_zoo_TA_2014, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2014-01-01","2014-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2014")
+K
+#L = 2015
+L <- 
+  ggplot(pivot_zoo_TA_2015, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2015-01-01","2015-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2015")
+L
+#M = 2016
+M <- 
+  ggplot(pivot_zoo_TA_2016, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2016-01-01","2016-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2016")
+M
+#N = 2017
+N <- 
+  ggplot(pivot_zoo_TA_2017, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2017-01-01","2017-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2017")
+N
+#O = 2018
+O <- 
+  ggplot(pivot_zoo_TA_2018, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2018-01-01","2018-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2018")
+O
+#P = 2019
+P <- 
+  ggplot(pivot_zoo_TA_2019, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2019-01-01","2019-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2019")
+P
+#Q = 2020
+Q <- 
+  ggplot(pivot_zoo_TA_2020, aes(x = Date, y =  value, fill = variable))+ 
+  geom_bar(stat = "identity", color = "black", width = 7)+ 
+  scale_fill_manual(values = c("Dap_TA" = "blue", 
+                               "Diaph_TA" = "turquoise1",
+                               "Cerio_TA"="red", 
+                               "Bosm_TA"="grey",
+                               "Nau_TA" = "yellow",
+                               "Cyc_TA"="yellow4",
+                               "Cala_TA"="green3"))+
+  scale_x_date(breaks=date_breaks("1 months"),labels=date_format("%b"),
+               limits = as.Date(c("2020-01-01","2020-12-31"))) +
+  theme(text = element_text(size = 12),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        panel.background = element_rect(fill = 'white', colour = 'black'),
+        legend.position = "none")+
+  ggtitle("2020")
+Q
+
+#final plot
+zooPLOT <- plot_grid(A, Fp, K, P,
+                     B, G, L, Q,
+                     C, H, M, NULL,
+                     D, I, N, NULL,
+                     E, J, O, NULL,
+                     align = "h", ncol = 4)
+zooPLOT
+
+title <- ggdraw() + 
+  draw_label(
+    ~paste("Crustaceans zooplankton abundance ", "(ind", "·L"^-1, ")"),
+    fontface = 'bold',
+    x = 0,
+    hjust = 0
+  ) +
+  theme(plot.margin = (margin = ggplot2::margin(0, 0, 0, 7)))
+
+
+FigureS6 <- plot_grid(title, zooPLOT, ncol=1, rel_heights = c(0.1, 1))
+
+FigureS6 #manually exported!
+
+
+
+#pivot dataset for taxa specific total BIOVOLUME...........................................................
+zoo_TB <- metadata %>% 
   select(Date, Year, Dap_TB, Diaph_TB, Cala_TB, Nau_TB, Cyc_TB, Cerio_TB, Bosm_TB)
 str(zoo_TB)
+
 #create a dataframe for each year and pivot to plot
 #2004
 zoo_TB_2004 <-zoo_TB[zoo_TB$Year %in% "2004",]
@@ -1156,17 +1726,20 @@ zooPLOT <- plot_grid(A, Fp, K, P,
                        E, J, O, NULL,
                        align = "h", ncol = 4)
 zooPLOT
+
 title <- ggdraw() + 
   draw_label(
-    ~paste("Crustaceans zooplankton biomass ", "(ugDW", "?L"^-1, ")"),
+    ~paste("Crustaceans zooplankton biomass ", "(ugDW", "·L"^-1, ")"),
     fontface = 'bold',
     x = 0,
     hjust = 0
   ) +
-  theme(plot.margin = margin(0, 0, 0, 7))
-plot_grid(title, zooPLOT, ncol=1, rel_heights = c(0.1, 1))
+  theme(plot.margin = (margin = ggplot2::margin(0, 0, 0, 7)))
 
 
+FigureS7 <- plot_grid(title, zooPLOT, ncol=1, rel_heights = c(0.1, 1))
+
+FigureS7 #manually exported!
 
 #Correlation between diversity metrics
 div_I <- zoop %>% 
@@ -1177,28 +1750,44 @@ chart.Correlation(div_I, histogram = TRUE, method = "pearson", pch = 20)
 chart.Correlation(div_I, histogram = TRUE, method = "spearman", pch = 20)
 
 
-#1.3.5 Drivers of chlorophyll a and zooplankton in Lough Feeagh
-#new variables
-#ln(cladocerans/copepods) --> with sum of abundances and sum of biomasses
-zoop$cladoceransA <- zoop$Dap_TA+
-                      zoop$Diaph_TA +
-                      zoop$Cerio_TA+
-                      zoop$Bosm_TA
-zoop$copepodsA <- zoop$Nau_TA+
-                      zoop$Cala_TA +
-                      zoop$Cyc_TA
-zoop$cla.cop.A <- zoop$cladoceransA/zoop$copepodsA
-zoop$ln.cla.cop.A <- log(zoop$cla.cop.A)
+#Zoo:Chla ratio (already ln transformed)
+#ln(zoo/chla)
+lnzoophyto_df <- metadata %>% 
+  select (Date, Zoo.Chla)
+#create month column
+months <- as.numeric(format(as.Date(lnzoophyto_df$Date, '%d/%m/%Y'), '%m'))
+indx <- setNames( rep(c('winter', 'spring', 'summer',
+                        'fall'),each=3), c(12,1:11))
+lnzoophyto_df$Season <- unname(indx[as.character(months)])
+str(lnzoophyto_df) #it worked!
+season.colours <- c("winter"="cyan", 
+                    "spring"="chartreuse",
+                    "summer"="yellow",
+                    "fall"="red")
 
-zoop$cladoceransB <- zoop$Dap_TB+
-  zoop$Diaph_TB +
-  zoop$Cerio_TB+
-  zoop$Bosm_TB
-zoop$copepodsB <- zoop$Nau_TB+
-  zoop$Cala_TB +
-  zoop$Cyc_TB
-zoop$cla.cop.B <- zoop$cladoceransB/zoop$copepodsB
-zoop$ln.cla.cop.B <- log(zoop$cla.cop.B)
+lnZP <- ggplot(data = lnzoophyto_df, aes(x=Date, y = Zoo.Chla)) +
+  geom_line(size = 1, data=lnzoophyto_df[!is.na(lnzoophyto_df$Zoo.Chla),])+
+  geom_point(aes(color=Season), size = 4) +
+  scale_color_manual(values=c("winter"="cyan", 
+                              "spring"="chartreuse",
+                              "summer"="yellow",
+                              "fall"="red"))+
+  ylab("ln(Zoo:Chla) (DW)") +
+  scale_x_date(breaks=date_breaks("1 year"),labels=date_format("%Y"),
+               limits = as.Date(c("2007-01-01","2020-12-31"))) +
+  theme(panel.background = element_rect(fill = 'white', colour = 'black'),
+        axis.title.x = element_blank()) +
+  geom_hline(yintercept=4.5, linetype=2, size=0.5, colour="black") +
+  geom_hline(yintercept=4, linetype=2, size=0.5, colour="black") +
+  geom_hline(yintercept=3.5, linetype=2, size=0.5, colour="black") 
+lnZP
+
+
+#ln(cladocerans/copepods) 
+
+zoop <- metadata %>% 
+  select (Date, copA.claA, copB.claB)
+
 
 #create month column
 months <- as.numeric(format(as.Date(zoop$Date, '%d/%m/%Y'), '%m'))
@@ -1206,8 +1795,8 @@ indx <- setNames( rep(c('winter', 'spring', 'summer',
                         'fall'),each=3), c(12,1:11))
 zoop$Season <- unname(indx[as.character(months)])
 
-lnClaCopA <- ggplot(data = zoop, aes(x=Date, y = ln.cla.cop.A)) +
-  geom_line(size = 1, data=zoop[!is.na(zoop$ln.cla.cop.A),])+
+lnClaCopA <- ggplot(data = zoop, aes(x=Date, y = copA.claA)) +
+  geom_line(size = 1, data=zoop[!is.na(zoop$copA.claA),])+
   geom_point(aes(color=Season), size = 4) +
   scale_color_manual(values=c("winter"="cyan", 
                               "spring"="chartreuse",
@@ -1216,12 +1805,12 @@ lnClaCopA <- ggplot(data = zoop, aes(x=Date, y = ln.cla.cop.A)) +
   ylab("ln(cladocerans:copepods) (abundances)") +
   scale_x_date(breaks=date_breaks("1 year"),labels=date_format("%Y")) +
   theme(panel.background = element_rect(fill = 'white', colour = 'black'),
-        axis.title.x = element_blank())+
+        axis.title.x = element_blank()) +
   geom_hline(yintercept=0, linetype=2, size=0.5, colour="black")
 lnClaCopA
 
-lnClaCopB <- ggplot(data = zoop, aes(x=Date, y = ln.cla.cop.B)) +
-  geom_line(size = 1, data=zoop[!is.na(zoop$ln.cla.cop.B),])+
+lnClaCopB <- ggplot(data = zoop, aes(x=Date, y = copB.claB)) +
+  geom_line(size = 1, data=zoop[!is.na(zoop$copB.claB),])+
   geom_point(aes(color=Season), size = 4) +
   scale_color_manual(values=c("winter"="cyan", 
                               "spring"="chartreuse",
@@ -1234,35 +1823,17 @@ lnClaCopB <- ggplot(data = zoop, aes(x=Date, y = ln.cla.cop.B)) +
   geom_hline(yintercept=0, linetype=2, size=0.5, colour="black")
 lnClaCopB
 
-#ln(zoo/chla)
-planktonchla$chla66 <- planktonchla$Chl.a*66
-planktonchla$chla66.1 <- planktonchla$chla66+1
-planktonchla$zoophyto <- planktonchla$Zoo_TB/planktonchla$chla66.1
-planktonchla$lnzoophyto <- log(planktonchla$zoophyto)
-summary(planktonchla$lnzoophyto)
-lnzoophyto_df <- planktonchla %>% 
-  select (Date, lnzoophyto)
-#create month column
-months <- as.numeric(format(as.Date(lnzoophyto_df$Date, '%d/%m/%Y'), '%m'))
-indx <- setNames( rep(c('winter', 'spring', 'summer',
-                        'fall'),each=3), c(12,1:11))
-lnzoophyto_df$Season <- unname(indx[as.character(months)])
-str(lnzoophyto_df) #it worked!
-season.colours <- c("winter"="cyan", 
-                    "spring"="chartreuse",
-                    "summer"="yellow",
-                    "fall"="red")
-lnZP <- ggplot(data = lnzoophyto_df, aes(x=Date, y = lnzoophyto)) +
-  geom_line(size = 1, data=lnzoophyto_df[!is.na(lnzoophyto_df$lnzoophyto),])+
-  geom_point(aes(color=Season), size = 4) +
-  scale_color_manual(values=c("winter"="cyan", 
-                             "spring"="chartreuse",
-                             "summer"="yellow",
-                             "fall"="red"))+
-  ylab("ln(Zoo:Chla) (DW)") +
-  scale_x_date(breaks=date_breaks("1 year"),labels=date_format("%Y"),
-               limits = as.Date(c("2007-01-01","2020-12-31"))) +
-  theme(panel.background = element_rect(fill = 'white', colour = 'black'),
-        axis.title.x = element_blank())+
-  geom_hline(yintercept=0, linetype=2, size=0.5, colour="black")
-lnZP
+#final plot
+zoopPLOT <- plot_grid(lnClaCopA, lnClaCopB,
+                     align = "h", ncol = 1, labels = c("a","b"))
+zoopPLOT  #manually exported!
+
+
+
+#Smolt run vs zoo size diversity --> plot in excel!
+
+
+
+
+
+
