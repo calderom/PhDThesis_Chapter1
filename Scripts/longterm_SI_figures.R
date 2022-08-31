@@ -1783,7 +1783,7 @@ lnZP <- ggplot(data = lnzoophyto_df, aes(x=Date, y = Zoo.Chla)) +
 lnZP
 
 
-#ln(cladocerans/copepods) 
+#ln(copepods/cladocerans) 
 
 zoop <- metadata %>% 
   select (Date, copA.claA, copB.claB)
@@ -1795,36 +1795,36 @@ indx <- setNames( rep(c('winter', 'spring', 'summer',
                         'fall'),each=3), c(12,1:11))
 zoop$Season <- unname(indx[as.character(months)])
 
-lnClaCopA <- ggplot(data = zoop, aes(x=Date, y = copA.claA)) +
+lnCopClaA <- ggplot(data = zoop, aes(x=Date, y = copA.claA)) +
   geom_line(size = 1, data=zoop[!is.na(zoop$copA.claA),])+
   geom_point(aes(color=Season), size = 4) +
   scale_color_manual(values=c("winter"="cyan", 
                               "spring"="chartreuse",
                               "summer"="yellow",
                               "fall"="red"))+
-  ylab("ln(cladocerans:copepods) (abundances)") +
+  ylab("ln(copepods:cladocerans) (abundances)") +
   scale_x_date(breaks=date_breaks("1 year"),labels=date_format("%Y")) +
   theme(panel.background = element_rect(fill = 'white', colour = 'black'),
         axis.title.x = element_blank()) +
   geom_hline(yintercept=0, linetype=2, size=0.5, colour="black")
-lnClaCopA
+lnCopClaA
 
-lnClaCopB <- ggplot(data = zoop, aes(x=Date, y = copB.claB)) +
+lnCopClaB <- ggplot(data = zoop, aes(x=Date, y = copB.claB)) +
   geom_line(size = 1, data=zoop[!is.na(zoop$copB.claB),])+
   geom_point(aes(color=Season), size = 4) +
   scale_color_manual(values=c("winter"="cyan", 
                               "spring"="chartreuse",
                               "summer"="yellow",
                               "fall"="red"))+
-  ylab("ln(cladocerans:copepods) (biomass)") +
+  ylab("ln(copepods:cladocerans) (biomass)") +
   scale_x_date(breaks=date_breaks("1 year"),labels=date_format("%Y")) +
   theme(panel.background = element_rect(fill = 'white', colour = 'black'),
         axis.title.x = element_blank())+
   geom_hline(yintercept=0, linetype=2, size=0.5, colour="black")
-lnClaCopB
+lnCopClaB
 
 #final plot
-zoopPLOT <- plot_grid(lnClaCopA, lnClaCopB,
+zoopPLOT <- plot_grid(lnCopClaA, lnCopClaB,
                      align = "h", ncol = 1, labels = c("a","b"))
 zoopPLOT  #manually exported!
 
